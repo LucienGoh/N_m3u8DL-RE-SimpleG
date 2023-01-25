@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace N_m3u8DL_CLI_SimpleG.Properties {
+namespace N_m3u8DL_RE_SimpleG.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace N_m3u8DL_CLI_SimpleG.Properties {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("N_m3u8DL_CLI_SimpleG.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("N_m3u8DL_RE_SimpleG.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

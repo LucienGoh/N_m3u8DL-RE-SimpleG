@@ -31,7 +31,7 @@ using MessageBox = System.Windows.MessageBox;
 using Path = System.IO.Path;
 using TextBox = System.Windows.Controls.TextBox;
 
-namespace N_m3u8DL_CLI_SimpleG
+namespace N_m3u8DL_RE_SimpleG
 {
     /// <summary>
     /// MainWindow.xaml 的交互逻辑
@@ -87,6 +87,8 @@ namespace N_m3u8DL_CLI_SimpleG
     /// - 支持存储代理、请求头
     /// 2021年3月21日
     /// - 支持MPD批量
+    /// 2023年1月25日
+    /// - 支持N_m3u8DL-RE
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -131,69 +133,69 @@ namespace N_m3u8DL_CLI_SimpleG
             {
                 if (TextBox_WorkDir.Text.Trim('\\').EndsWith(":")) //根目录
                 {
-                    sb.Append("--workDir \"" + TextBox_WorkDir.Text.Trim('\\') + "\\\\" + "\" ");
+                    sb.Append("--save-dir \"" + TextBox_WorkDir.Text.Trim('\\') + "\\\\" + "\" ");
                 }
                 else
                 {
-                    sb.Append("--workDir \"" + TextBox_WorkDir.Text.Trim('\\') + "\" ");
+                    sb.Append("--save-dir \"" + TextBox_WorkDir.Text.Trim('\\') + "\" ");
                 }
             }
             if (!string.IsNullOrEmpty(TextBox_Title.Text))
-                sb.Append("--saveName \"" + TextBox_Title.Text + "\" ");
+                sb.Append("--save-name \"" + TextBox_Title.Text + "\" ");
             if (!string.IsNullOrEmpty(TextBox_Headers.Text))
-                sb.Append("--headers \"" + TextBox_Headers.Text + "\" ");
+                sb.Append("--header \"" + TextBox_Headers.Text + "\" ");
             if (!string.IsNullOrEmpty(TextBox_Baseurl.Text))
-                sb.Append("--baseUrl \"" + TextBox_Baseurl.Text + "\" ");
+                sb.Append("--base-url \"" + TextBox_Baseurl.Text + "\" ");
             if (!string.IsNullOrEmpty(TextBox_MuxJson.Text))
-                sb.Append("--muxSetJson \"" + TextBox_MuxJson.Text + "\" ");
+                sb.Append("--mux-import \"" + TextBox_MuxJson.Text + "\" ");
             if (TextBox_Max.Text != "32")
-                sb.Append("--maxThreads \"" + TextBox_Max.Text + "\" ");
+                sb.Append("--thread-count \"" + TextBox_Max.Text + "\" ");
             if (TextBox_Min.Text != "16")
-                sb.Append("--minThreads \"" + TextBox_Min.Text + "\" ");
+                // sb.Append("--minThreads \"" + TextBox_Min.Text + "\" ");
             if (TextBox_Retry.Text != "15")
-                sb.Append("--retryCount \"" + TextBox_Retry.Text + "\" ");
+                sb.Append("--download-retry-count \"" + TextBox_Retry.Text + "\" ");
             if (TextBox_Timeout.Text != "10")
-                sb.Append("--timeOut \"" + TextBox_Timeout.Text + "\" ");
+                // sb.Append("--timeOut \"" + TextBox_Timeout.Text + "\" ");
             if (TextBox_StopSpeed.Text != "0") 
-                sb.Append("--stopSpeed \"" + TextBox_StopSpeed.Text + "\" ");
+                // sb.Append("--stopSpeed \"" + TextBox_StopSpeed.Text + "\" ");
             if (TextBox_MaxSpeed.Text != "0")
-                sb.Append("--maxSpeed \"" + TextBox_MaxSpeed.Text + "\" ");
+                // sb.Append("--maxSpeed \"" + TextBox_MaxSpeed.Text + "\" ");
             if (TextBox_Key.Text != "")
             {
-                if (File.Exists(TextBox_Key.Text))
-                    sb.Append("--useKeyFile \"" + TextBox_Key.Text + "\" ");
-                else
-                    sb.Append("--useKeyBase64 \"" + TextBox_Key.Text + "\" ");
+                // if (File.Exists(TextBox_Key.Text))
+                //     sb.Append("--useKeyFile \"" + TextBox_Key.Text + "\" ");
+                // else
+                //     sb.Append("--useKeyBase64 \"" + TextBox_Key.Text + "\" ");
             }
             if (TextBox_IV.Text != "")
             {
-                sb.Append("--useKeyIV \"" + TextBox_IV.Text + "\" ");
+                // sb.Append("--useKeyIV \"" + TextBox_IV.Text + "\" ");
             }
             if (TextBox_Proxy.Text != "")
             {
-                sb.Append("--proxyAddress \"" + TextBox_Proxy.Text.Trim() + "\" ");
+                sb.Append("--custom-proxy \"" + TextBox_Proxy.Text.Trim() + "\" ");
             }
             if (CheckBox_Del.IsChecked == true) 
-                sb.Append("--enableDelAfterDone ");
+                sb.Append("--del-after-done ");
             if (CheckBox_FastStart.IsChecked == true)
-                sb.Append("--enableMuxFastStart ");
+                // sb.Append("--enableMuxFastStart ");
             if (CheckBox_BinaryMerge.IsChecked == true)
-                sb.Append("--enableBinaryMerge ");
+                sb.Append("--binary-merge ");
             if (CheckBox_ParserOnly.IsChecked == true)
-                sb.Append("--enableParseOnly ");
+                // sb.Append("--enableParseOnly ");
             if (CheckBox_DisableDate.IsChecked == true)
-                sb.Append("--disableDateInfo ");
+                sb.Append("--no-date-info ");
             if (CheckBox_DisableMerge.IsChecked == true)
-                sb.Append("--noMerge ");
+                sb.Append("--skip-merge ");
             if (CheckBox_DisableProxy.IsChecked == true)
-                sb.Append("--noProxy ");
+                sb.Append("--use-system-proxy ");
             if (CheckBox_DisableCheck.IsChecked == true)
-                sb.Append("--disableIntegrityCheck ");
+                sb.Append("--check-segments-count ");
             if (CheckBox_AudioOnly.IsChecked == true)
-                sb.Append("--enableAudioOnly ");
+                // sb.Append("--enableAudioOnly ");
             if (TextBox_RangeStart.Text!="00:00:00"|| TextBox_RangeEnd.Text != "00:00:00")
             {
-                sb.Append($"--downloadRange \"{TextBox_RangeStart.Text}-{TextBox_RangeEnd.Text}\"");
+                // sb.Append($"--downloadRange \"{TextBox_RangeStart.Text}-{TextBox_RangeEnd.Text}\"");
             }
 
             TextBox_Parameter.Text = sb.ToString();
@@ -775,7 +777,7 @@ namespace N_m3u8DL_CLI_SimpleG
                 DirectoryInfo d = new DirectoryInfo(Environment.CurrentDirectory);
                 foreach (FileInfo fi in d.GetFiles().Reverse()) 
                 {
-                    if (fi.Extension.ToUpper() == ".exe".ToUpper() && fi.Name.StartsWith("N_m3u8DL-CLI_"))
+                    if (fi.Extension.ToUpper() == ".exe".ToUpper() && fi.Name.StartsWith("N_m3u8DL-RE_"))
                     {
                         TextBox_EXE.Text = fi.Name;
                     }
@@ -854,7 +856,7 @@ namespace N_m3u8DL_CLI_SimpleG
                     }
                     StringBuilder sb = new StringBuilder();
                     sb.AppendLine("@echo off");
-                    sb.AppendLine("::Created by N_m3u8DL-CLI-SimpleG\r\n");
+                    sb.AppendLine("::Created by N_m3u8DL-RE-SimpleG\r\n");
                     //sb.AppendLine("chcp 65001 >nul");
                     int i = 0;
                     foreach (var item in m3u8list)
@@ -875,7 +877,7 @@ namespace N_m3u8DL_CLI_SimpleG
                     m3u8list = File.ReadAllLines(inputUrl, GetType(inputUrl)).ToList();
                     StringBuilder sb = new StringBuilder();
                     sb.AppendLine("@echo off");
-                    sb.AppendLine("::Created by N_m3u8DL-CLI-SimpleG");
+                    sb.AppendLine("::Created by N_m3u8DL-RE-SimpleG");
                     //sb.AppendLine("chcp 65001 >nul");
                     int i = 0;
                     foreach (var item in m3u8list)
@@ -942,7 +944,6 @@ namespace N_m3u8DL_CLI_SimpleG
 
         private void Menu_GetDownloader(object sender, RoutedEventArgs e)
         {
-            Process.Start("https://github.com/nilaoda/N_m3u8DL-CLI/releases");
         }
 
         /// <summary> 

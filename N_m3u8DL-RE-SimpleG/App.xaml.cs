@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace N_m3u8DL_CLI_SimpleG
+namespace N_m3u8DL_RE_SimpleG
 {
     /// <summary>
     /// App.xaml 的交互逻辑
